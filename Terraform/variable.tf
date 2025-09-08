@@ -11,5 +11,5 @@ variable "availability_zone3" {
   
 }
 variable "ami" {
-  default = "ami-02d26659fd82cf299"
+  default = "ami-0eeb0a1ed8936f249"
 }
