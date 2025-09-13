@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/yourusername/eks-devops-pipeline.git', credentialsId: 'github-creds-id'
+                git branch: 'master', url: 'https://github.com/2402199/EKS-DEVOPS-MASTER.git', credentialsId: 'github-creds-id'
             }
         }
 
