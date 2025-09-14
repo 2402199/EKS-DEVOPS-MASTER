@@ -18,21 +18,13 @@ pipeline {
 
     stage('Prepare AWS creds & update kubeconfig') {
       steps {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CRED']]) {
-          sh '''#!/bin/bash
-          set -euo pipefail
+         {
+          sh '''
+          #!/bin/bash
+          ls
+          
+          pwd
 
-          echo "Updating kubeconfig for cluster: ${CLUSTER_NAME} in ${AWS_REGION}"
-
-          # Write kubeconfig into workspace (isolated from host)
-          aws eks --region "${AWS_REGION}" update-kubeconfig \
-              --name "${CLUSTER_NAME}" \
-              --kubeconfig "${KUBECONFIG_FILE}"
-
-          chmod 600 "${KUBECONFIG_FILE}"
-
-          echo "Verifying access to cluster..."
-          KUBECONFIG="${KUBECONFIG_FILE}" kubectl get nodes --no-headers || echo "⚠️ Could not list nodes, check IAM or cluster state."
           '''
         }
       }
