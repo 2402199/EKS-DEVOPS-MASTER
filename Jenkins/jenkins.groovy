@@ -36,7 +36,10 @@ pipeline {
             steps {
                 dir('/home/ubuntu/EKS-DEVOPS-MASTER') {
                     sh '''
-                        ansible-playbook -i inventory.ini playbooks/deploy-nginx.yaml
+                        cd EKS-DEVOPS-MASTER
+                        cd Ansible
+                        ansible-playbook -i inventory.ini install-argoCD.yaml
+
                     '''
                 }
             }
