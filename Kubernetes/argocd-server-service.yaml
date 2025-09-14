@@ -1,0 +1,17 @@
+# argocd-server-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8090
+    - name: https
+      port: 443
+      targetPort: 8090
+  selector:
+    app.kubernetes.io/name: argocd-server

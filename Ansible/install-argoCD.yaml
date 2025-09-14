@@ -1,0 +1,18 @@
+- name: Install ArgoCD on EKS
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create ArgoCD namespace
+      shell: |
+        export KUBECONFIG=/home/ubuntu/.kube/config
+        kubectl create namespace argocd || true
+
+    - name: Apply ArgoCD install manifests
+      shell: |
+        export KUBECONFIG=/home/ubuntu/.kube/config
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    - name: Install ArgoCD CLI
+      shell: |
+        curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+        chmod +x /usr/local/bin/argocd
