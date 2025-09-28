@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import psycopg2
 import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS so frontend on a different port can call backend
 
 # Get DB connection details from environment variables
 DB_HOST = os.getenv("DB_HOST", "postgres-service")
@@ -27,14 +29,14 @@ def get_db_connection():
 def home():
     return "Python Backend with Postgres is running!"
 
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
 
     if not username or not password:
-        return jsonify({"message": "Username and password required"}), 400
+        return jsonify({"message": "Username and password required", "success": False}), 400
 
     try:
         conn = get_db_connection()
@@ -46,13 +48,13 @@ def login():
         conn.close()
 
         if row and row[0] == password:
-            return jsonify({"message": "Login successful"}), 200
+            return jsonify({"message": "Login successful", "success": True}), 200
         else:
-            return jsonify({"message": "Invalid credentials"}), 401
+            return jsonify({"message": "Invalid credentials", "success": False}), 401
 
     except Exception as e:
         print(f"Error during login: {e}")
-        return jsonify({"message": "Internal Server Error"}), 500
+        return jsonify({"message": "Internal Server Error", "success": False}), 500
 
 if __name__ == "__main__":
     # Listen on all interfaces inside the pod

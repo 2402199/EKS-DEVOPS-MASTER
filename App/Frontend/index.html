@@ -27,7 +27,7 @@
       const password = document.getElementById('password').value;
 
       try {
-        const res = await fetch('/api/login', {   // call backend
+        const res = await fetch('http://localhost:30111/api/login', {   // call backend
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
